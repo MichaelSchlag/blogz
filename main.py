@@ -29,6 +29,8 @@ def go():
 def index():
 
     blogs = Blog.query.all()
+    blogs.reverse()
+
     id = request.args.get('id')
     if id != None:
         blogs = Blog.query.filter_by(id=id).all()
