@@ -4,17 +4,61 @@
         <title>{{title}}</title>
         <style>
             .blogpost{
-                color:darkblue;
+                background-color: #CCC;
+                color:#333;
+                padding: 12px;
+                margin: 12px;
+            }
+            .big{
+                width: 300px;
+            }
+            #wrapper{
+                background-color: #999;
+                max-width: 1200px;
+                margin: auto;
+            }
+            body{
+                background-color: #000;
+            }
+            nav{
+                text-align: center;
+            }
+            nav a{
+                font-size: 30px;
+                padding-inline: 20px;
+            }
+            h1{
+                font-size: 50px;
+                text-align: center;
+            }
+            header{
+                padding: 12px;
+            }
+            a{
+                text-decoration: none;
+                color: blue;
+            }
+            a:hover{
+                color: red;
+            }
+            form{
+                background-color: #CCC;
+                color:#333;
+                padding: 12px;
+                margin: 12px;
             }
         </style>
     </head>
 <body>
+    <div id="wrapper">
+        <header>
+    <h1>Build a Blog</h1>
 
     <nav>
         <a href="/blog">Blog</a>
         <a href="/new">Post</a>
     </nav>
-
+        </header>
     {% with messages = get_flashed_messages(with_categories=True) %}
     <ul>
     {% for category,message in messages %}
@@ -22,9 +66,9 @@
     {% endfor %}
     </ul>
     {% endwith %}
-    
+
     {% block content %}
     {% endblock %}
-
+    </div>
 </body>
 </html>

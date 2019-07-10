@@ -28,14 +28,12 @@ def go():
 @app.route('/blog', methods=['POST', 'GET'])
 def index():
 
-    if request.method == 'POST':
-        blog_name = request.form['blog_name']
-        blog_content = request.form['blog_content']
-        new_blog = Blog(blog_name, blog_content)
-        db.session.add(new_blog)
-        db.session.commit()
-
     blogs = Blog.query.all()
+    id = request.args.get('id')
+    if id != None:
+        blogs = Blog.query.filter_by(id=id).all()
+        return render_template('specific.html',title="Build a Blog", blogs=blogs)
+
     return render_template('index.html',title="Build a Blog", blogs=blogs)
 
 @app.route('/new', methods=['POST', 'GET'])
@@ -48,7 +46,7 @@ def new():
             new_blog = Blog(blog_name, blog_content)
             db.session.add(new_blog)
             db.session.commit()
-            return redirect('/blog')
+            return redirect('/blog?id={}'.format(new_blog.id))
         else:
             flash('Enter both fields', 'error')
 
