@@ -6,7 +6,7 @@
         {% for blog in blogs %}
         <div class="blogpost">
             <a href="/blog?id={{blog.id}}"><h2>{{blog.title}}</h2></a>
-            <a href="/blog?author={{blog.author}}"><p class="author">by {{blog.author}}</p></a>
+            <p class="author">by {{blog.author}}</p>
             <p>{{blog.content}}</p>
         </div>
         <hr />

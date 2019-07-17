@@ -12,6 +12,10 @@
             .big{
                 width: 300px;
             }
+            .author{
+                color:rebeccapurple;
+                display: inline-block;
+            }
             #wrapper{
                 background-color: #999;
                 max-width: 1200px;
@@ -52,7 +56,17 @@
 <body>
     <div id="wrapper">
         <header>
-    <h1>Build a Blog</h1>
+                <div style='float: right'>
+                        {% if 'user' in session %}
+                            {{ session['user'] }}
+                            <form action="/logout" method="post" id='logout'>
+                            <input type="submit" value="Log Out" />
+                            </form>
+                        {% else %}
+                            <a href="/login">login</a> | <a href="/register">register</a>
+                        {% endif %}
+                    </div>
+    <h1>Blogz</h1>
 
     <nav>
         <a href="/blog">Blog</a>

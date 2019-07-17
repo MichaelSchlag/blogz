@@ -6,6 +6,7 @@
         {% for blog in blogs %}
         <div class="blogpost">
             <h2>{{blog.title}}</h2>
+            <p class="author">by {{blog.author}}</p>
             <p>{{blog.content}}</p>
         </div>
         <hr />
