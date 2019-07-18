@@ -112,6 +112,11 @@ def register():
         username = request.form['username']
         password = request.form['password']
         verify = request.form['verify']
+        cool_letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
+        for letter in username:
+            if not letter in cool_letters:
+                flash('Username may only contain letters, numbers, and underscores')
+                return redirect('/register')
         if len(username) < 3:
             flash('Username must be 3 characters or more')
             return redirect('/register')
