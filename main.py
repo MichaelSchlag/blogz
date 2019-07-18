@@ -41,7 +41,7 @@ class User(db.Model):
 @app.route("/")
 def go():
     #encoded_error = request.args.get("error")
-    #return render_template('index.html')
+    #return render_template('allblogs.html')
     #, watchlist=get_current_watchlist(logged_in_user().id), error=encoded_error and cgi.escape(encoded_error, quote=True)
     return redirect("/blog")
 
@@ -50,7 +50,7 @@ def logged_in_user():
     return owner
 
 @app.route('/blog', methods=['POST', 'GET'])
-def index():
+def allblogs():
 
     blogs = Blog.query.all()
     blogs.reverse()
@@ -66,7 +66,7 @@ def index():
         blogs = Blog.query.filter_by(author_id=id).all()
         return render_template('author.html',title="Blogz", blogs=blogs)
 
-    return render_template('index.html',title="Blogz", blogs=blogs)
+    return render_template('allblogs.html',title="Blogz", blogs=blogs)
 
 @app.route('/new', methods=['POST', 'GET'])
 def new():
@@ -100,7 +100,7 @@ def login():
             if password == user.password:
                 session['user'] = user.username
                 flash('Welcome back, '+user.username)
-                return redirect("/")
+                return redirect("/new")
         flash('Invalid username and password combination')
         return redirect("/login")
 
@@ -115,7 +115,7 @@ def register():
             flash('Username must be 3 characters or more')
             return redirect('/register')
         if User.query.filter_by(username=username).count() > 0:
-            flash('That username is taken. Try ' + username + str(taken_count(username)))
+            flash('That username is taken. Try ' + str(taken_count(username)))
             return redirect('/register')
         if password != verify:
             flash('Passwords must match')
@@ -124,17 +124,29 @@ def register():
         db.session.add(user)
         db.session.commit()
         session['user'] = user.username
-        return redirect("/")
+        return redirect("/new")
     else:
         return render_template('register.html')
 
 def taken_count(name):
-    dummy = 1
-    new_name = str(name) + str(dummy)
+    nums = "0123456789"
+    dummy = 0
+    front = ''
+    back = ''
+    tens = 1
+    for pos in range(len(name)-1, 0, -1):
+        if not name[pos] in nums:
+            front = name[0:pos+1]
+            back = name[pos+1:]
+            break
+        dummy += int(name[pos]) * tens
+        tens *= 10
+    dummy += 1
+    new_name = str(front) + str(dummy)
     while User.query.filter_by(username=new_name).count() > 0:
         dummy += 1
-        new_name = str(name) + str(dummy)
-    return dummy
+        new_name = str(front) + str(dummy)
+    return new_name
 
 @app.route("/logout", methods=['POST'])
 def logout():
@@ -145,7 +157,7 @@ def logout():
 
 @app.before_request
 def require_login():
-    endpoints_without_login = ['login', 'register']
+    endpoints_without_login = ['login', 'register', 'allblogs']
     if not ('user' in session or request.endpoint in endpoints_without_login):
         return redirect("/register")
 
