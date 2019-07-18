@@ -39,11 +39,12 @@ class User(db.Model):
 
 
 @app.route("/")
-def go():
+def index():
     #encoded_error = request.args.get("error")
     #return render_template('allblogs.html')
     #, watchlist=get_current_watchlist(logged_in_user().id), error=encoded_error and cgi.escape(encoded_error, quote=True)
-    return redirect("/blog")
+    authors = User.query.all()
+    return render_template('index.html',title="Blogz", authors=authors)
 
 def logged_in_user():
     owner = User.query.filter_by(username=session['user']).first()
@@ -62,8 +63,8 @@ def allblogs():
 
     author = request.args.get('author')
     if author != None:
-        id = User.id
-        blogs = Blog.query.filter_by(author_id=id).all()
+        writer = User.query.filter_by(username=author).first()
+        blogs = Blog.query.filter_by(author_id=writer.id).all()
         return render_template('author.html',title="Blogz", blogs=blogs)
 
     return render_template('allblogs.html',title="Blogz", blogs=blogs)
@@ -157,7 +158,7 @@ def logout():
 
 @app.before_request
 def require_login():
-    endpoints_without_login = ['login', 'register', 'allblogs']
+    endpoints_without_login = ['login', 'register', 'allblogs', 'index']
     if not ('user' in session or request.endpoint in endpoints_without_login):
         return redirect("/register")
 
