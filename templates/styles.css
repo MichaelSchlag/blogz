@@ -1,0 +1,48 @@
+.blogpost{
+    background-color: #CCC;
+    color:#333;
+    padding: 12px;
+    margin: 12px;
+}
+.big{
+    width: 300px;
+}
+.author{
+    padding-left: 20px;
+    font-size: 20px;
+}
+#wrapper{
+    background-color: #999;
+    max-width: 1200px;
+    margin: auto;
+}
+body{
+    background-color: #000;
+}
+nav{
+    text-align: center;
+}
+nav a{
+    font-size: 30px;
+    padding-inline: 20px;
+}
+h1{
+    font-size: 50px;
+    text-align: center;
+}
+header{
+    padding: 12px;
+}
+a{
+    text-decoration: none;
+    color: blue;
+}
+a:hover{
+    color: red;
+}
+form{
+    background-color: #CCC;
+    color:#333;
+    padding: 12px;
+    margin: 12px;
+}

@@ -2,6 +2,8 @@
 <html>
     <head>
         <title>{{title}}</title>
+        
+        <link rel="stylesheet" href="styles.css" />
         <style>
             .blogpost{
                 background-color: #CCC;
@@ -13,8 +15,8 @@
                 width: 300px;
             }
             .author{
-                color:rebeccapurple;
-                display: inline-block;
+                padding-left: 20px;
+                font-size: 20px;
             }
             #wrapper{
                 background-color: #999;
@@ -34,6 +36,9 @@
             h1{
                 font-size: 50px;
                 text-align: center;
+            }
+            h2{
+                padding: 12px;
             }
             header{
                 padding: 12px;
@@ -56,7 +61,7 @@
 <body>
     <div id="wrapper">
         <header>
-                <div style='float: right'>
+                <div style='float: right; font-size: 20px;'>
                         {% if 'user' in session %}
                             {{ session['user'] }}
                             <form action="/logout" method="post" id='logout'>

@@ -6,12 +6,11 @@
         {% for blog in blogs %}
         <div class="blogpost">
             <h2>{{blog.title}}</h2>
-            <p class="author">by {{blog.author}}</p>
+            <a href="/blog?author={{blog.author}}"></a><p class="author">by {{blog.author}}</p></a>
             <p>{{blog.content}}</p>
         </div>
         <hr />
         {% endfor %}
-
 
 
 {% endblock %}
